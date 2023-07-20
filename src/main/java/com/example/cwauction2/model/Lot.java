@@ -1,98 +1,47 @@
 package com.example.cwauction2.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 
 import java.util.List;
 
 @Entity
-@Table(name = "lot")
+@Getter
+@Setter
 public class Lot {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "status")
-    private Status status;
-    @Column(name = "title")
+    private String status;
     private String title;
-    @Column(name = "description")
     private String description;
-    @Column(name = "start_price")
     private Integer startPrice;
-    @Column(name = "bid_price")
     private Integer bidPrice;
-    @OneToMany
-    private List<Bid> bids;
 
-    public List<Bid> getBids() {
-        return bids;
-    }
+    @OneToMany(mappedBy = "lot")
+    private List<Bid> bidList;
 
-    public void setBids(List<Bid> bids) {
-        this.bids = bids;
+    public Lot(String status
+            , String title
+            , String description
+            , Integer startPrice
+            , Integer bidPrice) {
+        this.status = status;
+        this.title = title;
+        this.description = description;
+        this.startPrice = startPrice;
+        this.bidPrice = bidPrice;
     }
 
     public Lot() {
-    }
 
-    public Integer getId() {
-        return id;
-    }
-
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getStartPrice() {
-        return startPrice;
-    }
-
-    public void setStartPrice(Integer startPrice) {
-        this.startPrice = startPrice;
-    }
-
-    public Integer getBidPrice() {
-        return bidPrice;
-    }
-
-    public void setBidPrice(Integer bidPrice) {
-        this.bidPrice = bidPrice;
     }
 
     @Override
     public String toString() {
-        return "Lot{" +
-                "id=" + id +
-                ", status=" + status +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", startPrice=" + startPrice +
-                ", bidPrice=" + bidPrice +
-                ", bids=" + bids +
-                '}';
+        return  id + status + title + description + startPrice + bidPrice + bidList ;
     }
 }
